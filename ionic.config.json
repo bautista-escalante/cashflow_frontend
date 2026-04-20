@@ -1,5 +1,5 @@
 {
-  "name": "cashflow_front",
+  "name": "cashflow",
   "integrations": {
     "capacitor": {}
   },

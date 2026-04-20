@@ -35,3 +35,152 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/* ============================================
+   PALETA DE COLORES — APP FINANZAS PERSONALES
+   ============================================ */
+
+:root {
+
+  /* --- PRIMARIOS --- */
+  --color-primary:          #534AB7;  /* Violeta principal — botones, nav, acciones */
+  --color-primary-light:    #EEEDFE;  /* Violeta suave — fondos, hover */
+  --color-primary-mid:      #AFA9EC;  /* Violeta medio — bordes, íconos */
+  --color-primary-dark:     #3C3489;  /* Violeta oscuro — texto sobre fondo claro */
+
+  --color-accent:           #0F6E56;  /* Teal — acento de marca */
+  --color-accent-light:     #E1F5EE;  /* Teal suave — fondos de sección */
+  --color-accent-mid:       #5DCAA5;  /* Teal medio — íconos, separadores */
+
+  /* --- SEMÁNTICOS --- */
+
+  /* Ingresos */
+  --color-income:           #639922;  /* Verde — valores positivos */
+  --color-income-light:     #EAF3DE;  /* Verde suave — fondo tarjeta ingreso */
+  --color-income-mid:       #97C459;  /* Verde medio — íconos ingreso */
+
+  /* Gastos */
+  --color-expense:          #D85A30;  /* Coral — valores negativos */
+  --color-expense-light:    #FAECE7;  /* Coral suave — fondo tarjeta gasto */
+  --color-expense-mid:      #F0997B;  /* Coral medio — íconos gasto */
+
+  /* --- ALERTA / PRESUPUESTO --- */
+  --color-warning:          #BA7517;  /* Ámbar — límite de presupuesto cercano */
+  --color-warning-light:    #FAEEDA;  /* Ámbar suave — fondo alerta */
+  --color-warning-mid:      #EF9F27;  /* Ámbar medio — íconos advertencia */
+
+  /* --- NEUTROS --- */
+  --color-text-primary:     #2C2C2A;  /* Texto principal */
+  --color-text-secondary:   #5F5E5A;  /* Texto secundario / etiquetas */
+  --color-text-hint:        #888780;  /* Placeholders / texto deshabilitado */
+
+  --color-border:           #B4B2A9;  /* Bordes y divisores */
+  --color-input-bg:         #D3D1C7;  /* Fondo de inputs */
+  --color-bg-app:           #F1EFE8;  /* Fondo general de la app */
+  --color-bg-card:          #FFFFFF;  /* Fondo de tarjetas / modales */
+
+}
+
+
+/* ============================================
+   MODO OSCURO
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+
+    /* Primarios */
+    --color-primary:          #7F77DD;
+    --color-primary-light:    #26215C;
+    --color-primary-mid:      #534AB7;
+    --color-primary-dark:     #CECBF6;
+
+    --color-accent:           #1D9E75;
+    --color-accent-light:     #04342C;
+    --color-accent-mid:       #1D9E75;
+
+    /* Semánticos */
+    --color-income:           #97C459;
+    --color-income-light:     #173404;
+    --color-income-mid:       #639922;
+
+    --color-expense:          #F0997B;
+    --color-expense-light:    #4A1B0C;
+    --color-expense-mid:      #D85A30;
+
+    /* Alerta */
+    --color-warning:          #EF9F27;
+    --color-warning-light:    #412402;
+    --color-warning-mid:      #BA7517;
+
+    /* Neutros */
+    --color-text-primary:     #F1EFE8;
+    --color-text-secondary:   #B4B2A9;
+    --color-text-hint:        #888780;
+
+    --color-border:           #444441;
+    --color-input-bg:         #2C2C2A;
+    --color-bg-app:           #1A1A18;
+    --color-bg-card:          #2C2C2A;
+
+  }
+}
+
+
+/* ============================================
+   CLASES DE UTILIDAD
+   ============================================ */
+
+/* Textos semánticos */
+.text-income  { color: var(--color-income); }
+.text-expense { color: var(--color-expense); }
+.text-warning { color: var(--color-warning); }
+
+/* Fondos semánticos */
+.bg-income  { background-color: var(--color-income-light); }
+.bg-expense { background-color: var(--color-expense-light); }
+.bg-warning { background-color: var(--color-warning-light); }
+
+/* Badges */
+.badge-income {
+  background-color: var(--color-income-light);
+  color: var(--color-income);
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.badge-expense {
+  background-color: var(--color-expense-light);
+  color: var(--color-expense);
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.badge-warning {
+  background-color: var(--color-warning-light);
+  color: var(--color-warning);
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Botón primario */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #EEEDFE;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}

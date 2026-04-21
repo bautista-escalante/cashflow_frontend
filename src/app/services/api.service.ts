@@ -11,8 +11,8 @@ export class ApiService {
   baseUrl = "https://cashflow-backend-bhya.onrender.com";
   constructor(private http: HttpClient) {}
 
-  login(body: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/usuarios/auth`, body);
+  post(body: any, endpoint: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}${endpoint}`, body);
   }
 
 }

@@ -13,7 +13,7 @@ import {StorageService} from '../services/storage.service'
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonIcon, IonContent, CommonModule, FormsModule]
+  imports: [IonContent, CommonModule, FormsModule]
 })
 export class LoginPage implements OnInit {
 
@@ -34,10 +34,10 @@ export class LoginPage implements OnInit {
     }
 
     // consumir api
-    this.apiService.login({
+    this.apiService.post({
     email: this.email,
     clave: this.password
-    }).subscribe({
+    }, "/usuarios/auth").subscribe({
       next: (res) => {
         // guardar token
         this.storageService.set("token", res.access_token);
@@ -50,9 +50,9 @@ export class LoginPage implements OnInit {
     });
     
   }
-
+  
   onRegister(){
-    // usando router navegamos hacia sign in
+    this.router.navigate(["/register"]);
   }
 
 }

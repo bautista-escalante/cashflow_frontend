@@ -1,0 +1,64 @@
+<ion-content class="wrap">
+
+  <div class="card">
+
+    <div class="accent-bar"></div>
+
+    <div class="brand">
+      <div class="brand-icon">
+        <img src="assets/logo.svg">
+      </div>
+
+      <h1>cashflow</h1>
+      <p>Creá tu cuenta personal</p>
+    </div>
+
+    <div class="field">
+      <label>Nombre</label>
+      <div class="input-wrap">
+        <input type="text" [(ngModel)]="name" placeholder="Tu nombre" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Usuario</label>
+      <div class="input-wrap">
+        <input type="text" [(ngModel)]="email" placeholder="ejemplo@email.com" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Contraseña</label>
+      <div class="input-wrap">
+        <input type="password" [(ngModel)]="password" placeholder="Mínimo 8 caracteres" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Repetir contraseña</label>
+      <div class="input-wrap">
+        <input type="password" [(ngModel)]="passwordConfirm" placeholder="Repetí tu contraseña" />
+      </div>
+    </div>
+
+    <label class="error">{{error}}</label>
+
+    <div class="actions">
+      <button class="btn-primary" (click)="onRegister()">
+        Crear cuenta
+      </button>
+
+      <div class="divider"><span>¿Ya tenés cuenta?</span></div>
+
+      <button class="btn-secondary" (click)="onLogin()">
+        Iniciar sesión
+      </button>
+    </div>
+
+    <p class="footer-note">
+      Al continuar aceptás los <a href="#">Términos</a> y la <a href="#">Privacidad</a>
+    </p>
+
+  </div>
+
+</ion-content>

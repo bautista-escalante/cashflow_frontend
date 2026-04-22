@@ -84,52 +84,48 @@
 
 /* ============================================
    MODO OSCURO
-   ============================================ */
-
-@media (prefers-color-scheme: dark) {
-  :root {
-
-    /* Primarios */
+   
+   @media (prefers-color-scheme: dark) {
+    :root {
+      
     --color-primary:          #7F77DD;
     --color-primary-light:    #26215C;
     --color-primary-mid:      #534AB7;
     --color-primary-dark:     #CECBF6;
-
+    
     --color-accent:           #1D9E75;
     --color-accent-light:     #04342C;
     --color-accent-mid:       #1D9E75;
-
-    /* Semánticos */
+    
     --color-income:           #97C459;
     --color-income-light:     #173404;
     --color-income-mid:       #639922;
-
+    
     --color-expense:          #F0997B;
     --color-expense-light:    #4A1B0C;
     --color-expense-mid:      #D85A30;
 
-    /* Alerta */
     --color-warning:          #EF9F27;
     --color-warning-light:    #412402;
     --color-warning-mid:      #BA7517;
-
-    /* Neutros */
+    
     --color-text-primary:     #F1EFE8;
     --color-text-secondary:   #B4B2A9;
     --color-text-hint:        #888780;
-
+    
     --color-border:           #444441;
     --color-input-bg:         #2C2C2A;
     --color-bg-app:           #1A1A18;
     --color-bg-card:          #2C2C2A;
-
+    
   }
 }
+*/
 
 
 /* ============================================
-   CLASES DE UTILIDAD
-   ============================================ */
+CLASES DE UTILIDAD
+============================================ */
 
 /* Textos semánticos */
 .text-income  { color: var(--color-income); }
@@ -262,16 +258,6 @@
  
   .input-wrap {
     position: relative;
- 
-    .input-icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 16px;
-      color: var(--color-text-hint);
-      pointer-events: none;
-    }
  
     input {
       width: 100%;

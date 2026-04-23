@@ -48,10 +48,12 @@ export class LoginPage implements OnInit {
         this.error = err.error?.detail || "Error al iniciar sesión";
       }
     });
-    
   }
-  
+
   onRegister(){
+    this.error = ""
+    this.email=""
+    this.password=""
     this.router.navigate(["/register"]);
   }
 

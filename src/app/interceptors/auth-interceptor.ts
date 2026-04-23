@@ -5,6 +5,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token = sessionStorage.getItem('token');
 
   if (token) {
+    console.log("interseptor con token: "+token)
     const cloned = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`

@@ -7,14 +7,26 @@ import { Injectable } from '@angular/core';
 export class StorageService {
 
   set(key: string, value: any) {
-    sessionStorage.setItem(key, JSON.stringify(value));
+    if (typeof value === 'string') {
+      sessionStorage.setItem(key, value);
+    } else {
+      sessionStorage.setItem(key, JSON.stringify(value));
+    }
   }
 
   get(key: string) {
     const data = sessionStorage.getItem(key);
-    return data ? JSON.parse(data) : null;
-  }
+    console.log(data)
+    if (!data) return null;
 
+    try {
+      return JSON.parse(data);
+
+    } catch {
+
+      return data;
+    }
+  }
   remove(key: string) {
     sessionStorage.removeItem(key);
   }

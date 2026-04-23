@@ -21,8 +21,17 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'not-found',
+    loadComponent: () => import('./not-found/not-found.page').then( m => m.NotFoundPage)
+  },
+  {
     path: '',
     redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found',
     pathMatch: 'full',
   },
 ];

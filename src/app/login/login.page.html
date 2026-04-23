@@ -41,8 +41,10 @@
       </button>
     </div>
 
-    <p class="footer-note">
-      Al continuar aceptás los <a href="#">Términos</a> y la <a href="#">Privacidad</a>
-    </p>
+    @if (isLoading) {
+      <div class="spiner">  
+        <ion-spinner color="tertiary" name="circular"></ion-spinner>
+      </div>
+    }
   </div>
 </ion-content>

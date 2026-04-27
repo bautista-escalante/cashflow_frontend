@@ -24,4 +24,8 @@ export class HomePage implements OnInit{
   addPlataform(){
     this.router.navigate(["/plataforma"])
   }
+  
+  addMoviments(){
+    this.router.navigate(["/movimientos"])
+  }
 }

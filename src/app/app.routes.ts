@@ -25,6 +25,10 @@ export const routes: Routes = [
     loadComponent: () => import('./not-found/not-found.page').then( m => m.NotFoundPage)
   },
   {
+    path: 'movimientos',
+    loadComponent: () => import('./movements/movements.page').then( m => m.MovementsPage)
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',

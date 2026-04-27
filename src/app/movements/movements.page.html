@@ -1,0 +1,97 @@
+<ion-content class="wrap">
+  <div class="card">
+
+    <div class="field">
+      <label>Tipo de operación</label>
+      <div class="input-wrap">
+        <ion-select 
+          [(ngModel)]="selectedOperation"
+          placeholder="Elegí el tipo de operación"
+          interface="popover">
+          <ion-select-option value="gasto">Gasto</ion-select-option>
+          <ion-select-option value="ingreso">Ingreso</ion-select-option>
+          <ion-select-option value="permutacion">Permutación</ion-select-option>
+        </ion-select>
+      </div>
+    </div>
+    
+    <div class="field">
+      <label>Monto</label>
+      <div class="input-wrap">
+        <input type="number" [(ngModel)]="amount" required min="0" placeholder="0.00"/>
+      </div>
+    </div>
+
+    @if(selectedOperation == "gasto") {
+      <div class="field">
+        <label>Categoría</label>
+        <div class="input-wrap">
+          <ion-select 
+            [(ngModel)]="selectedCategories"
+            placeholder="Elegí la categoría"
+            interface="popover">
+            @for (category of categories; track category) {
+              <ion-select-option [value]="category.id">{{ category.nombre }}</ion-select-option>
+            }
+          </ion-select>
+        </div>
+      </div>
+    }
+
+    @if(selectedOperation != "permutacion") {
+      <div class="field">
+        <label>descripcion</label>
+        <div class="input-wrap">
+          <input type="text" [(ngModel)]="description"  placeholder="ej: compra"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Plataforma</label>
+        <div class="input-wrap">
+          <ion-select 
+            [(ngModel)]="selectedPlataform"
+            placeholder="Elegí una plataforma"
+            interface="popover">
+            @for (plataform of plataforms; track plataform) {
+              <ion-select-option [value]="plataform.id">{{ plataform.nombre }}</ion-select-option>
+            }
+          </ion-select>
+        </div>
+      </div>
+    }
+
+    @if(selectedOperation == "permutacion") {
+      <div class="field">
+        <label>Plataforma de origen</label>
+        <div class="input-wrap">
+          <ion-select 
+            [(ngModel)]="selectedOrigin"
+            placeholder="Plataforma de origen"
+            interface="popover">
+            @for (plataform of plataforms; track plataform) {
+              <ion-select-option [value]="plataform">{{ plataform.nombre }}</ion-select-option>
+            }
+          </ion-select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Plataforma de destino</label>
+        <div class="input-wrap">
+          <ion-select 
+            [(ngModel)]="selectedDestination"
+            placeholder="Plataforma de destino"
+            interface="popover">
+            @for (plataform of plataforms; track plataform) {
+              <ion-select-option [value]="plataform">{{ plataform.nombre }}</ion-select-option>
+            }
+          </ion-select>
+        </div>
+      </div>
+    }
+
+    <button class="btn-primary" (click)="onAdd()">agregar</button>
+
+  </div>
+</ion-content>

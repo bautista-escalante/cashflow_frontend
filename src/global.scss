@@ -353,3 +353,43 @@ CLASES DE UTILIDAD
 .error {
   color: var(--color-expense);
 }
+
+.field .input-wrap ion-select {
+  width: 100%;
+  box-sizing: border-box;
+  height: 48px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--color-input-bg);
+  background: var(--color-bg-app);
+  font-size: 15px;
+  color: var(--color-text-primary);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+
+  /* Color del placeholder */
+  --placeholder-color: var(--color-text-hint);
+  --placeholder-opacity: 1;
+
+  /* Ícono de flecha */
+  --highlight-color-focused: var(--color-primary);
+
+  &::part(placeholder) {
+    color: var(--color-text-hint);
+    opacity: 1;
+  }
+
+  &::part(text) {
+    color: var(--color-text-primary);
+  }
+
+  &::part(icon) {
+    color: var(--color-primary-mid);
+    opacity: 1;
+  }
+
+  &.ion-focused, &:focus-within {
+    border-color: var(--color-primary);
+    background: var(--color-bg-card);
+  }
+}

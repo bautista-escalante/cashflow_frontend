@@ -1,0 +1,19 @@
+[
+  { "id": 1, "nombre": "Alimentación", "icono": "restaurant-outline" },
+  { "id": 2, "nombre": "Transporte", "icono": "car-outline" },
+  { "id": 3, "nombre": "Vivienda", "icono": "home-outline" },
+  { "id": 4, "nombre": "Servicios", "icono": "flash-outline" },
+  { "id": 5, "nombre": "Salud", "icono": "medkit-outline" },
+  { "id": 6, "nombre": "Educación", "icono": "school-outline" },
+  { "id": 7, "nombre": "Entretenimiento", "icono": "game-controller-outline" },
+  { "id": 8, "nombre": "Ropa", "icono": "shirt-outline" },
+  { "id": 9, "nombre": "Tecnología", "icono": "phone-portrait-outline" },
+  { "id": 10, "nombre": "Suscripciones", "icono": "repeat-outline" },
+  { "id": 11, "nombre": "Deudas", "icono": "card-outline" },
+  { "id": 12, "nombre": "Regalos", "icono": "gift-outline" },
+  { "id": 13, "nombre": "Viajes", "icono": "airplane-outline" },
+  { "id": 14, "nombre": "Mascotas", "icono": "paw-outline" },
+  { "id": 15, "nombre": "Impuestos", "icono": "document-text-outline" },
+  { "id": 16, "nombre": "Seguros", "icono": "shield-checkmark-outline" },
+  { "id": 17, "nombre": "Otros", "icono": "ellipsis-horizontal-outline" }
+] 

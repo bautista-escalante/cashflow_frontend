@@ -30,11 +30,11 @@ export class ApiService {
     );
   }
 
-changePassword(newPassword: string): Observable<any> {
-  return this.http.put(
-    `${this.baseUrl}/usuarios/`,
-    { clave: newPassword }
-    );
+  changePassword(newPassword: string): Observable<any> {
+    return this.http.put(
+      `${this.baseUrl}/usuarios/`,
+      { clave: newPassword }
+      );
   }
 
 }

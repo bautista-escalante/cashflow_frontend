@@ -43,8 +43,12 @@ export class LoginPage implements OnInit {
       next: (res) => {
         // guardar token
         this.storageService.set("token", res.access_token);
-        this.isLoading=false
         this.router.navigate(["/home"]);
+        
+        this.isLoading=false
+        this.error = ""
+        this.email=""
+        this.password=""
       },
       error: (err) => {
         this.error = err.error?.detail || "Error al iniciar sesión";

@@ -26,7 +26,13 @@ export const routes: Routes = [
   },
   {
     path: 'movimientos',
-    loadComponent: () => import('./movements/movements.page').then( m => m.MovementsPage)
+    loadComponent: () => import('./movements/movements.page').then( m => m.MovementsPage),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'change-password',
+    loadComponent: () => import('./change-password/change-password.page').then( m => m.ChangePasswordPage),
+    canActivate: [AuthGuard]
   },
   {
     path: '',

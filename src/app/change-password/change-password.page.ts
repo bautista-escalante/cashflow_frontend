@@ -41,9 +41,9 @@ export class ChangePasswordPage implements OnInit {
           await toast.present();
           this.router.navigate(["/home"])
           this.isLoading = false
-        }), error: ((err)=>{
-          this.error = err.error.detail
-          this.isLoading = false
+      }), error: ((err)=>{
+        this.error = err.error.detail
+        this.isLoading = false
       })
     })
     

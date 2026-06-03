@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class MovementsPage implements OnInit {
 
-  plataforms: any;
+  plataforms: any = [];
   selectedPlataform="";
   selectedOperation = ""
   error = ""
@@ -57,9 +57,60 @@ export class MovementsPage implements OnInit {
 
   onAdd(){
 
-    // validar ANTES
-    // los campos no esten vacios
-    // siempre i cuando lo requieran
+    this.error = "";
+
+    // 1. Tipo de operación
+    if (!this.selectedOperation) {
+      this.error = "Seleccioná un tipo de operación";
+      return;
+    }
+
+    // 2. Monto
+    if (this.amount == null || this.amount === "" || this.amount <= 0) {
+      this.error = "Ingresá un monto válido mayor a 0";
+      return;
+    }
+
+    // 3. GASTO
+    if (this.selectedOperation === "gasto") {
+      if (!this.selectedCategories) {
+        this.error = "Seleccioná una categoría";
+        return;
+      }
+    }
+
+    // 4. INGRESO o GASTO
+    if (this.selectedOperation !== "permutacion") {
+
+      if (!this.description || this.description.trim().length < 3) {
+        this.error = "La descripción debe tener al menos 3 caracteres";
+        return;
+      }
+
+      if (!this.selectedPlataform) {
+        this.error = "Seleccioná una plataforma";
+        return;
+      }
+    }
+
+    // 5. PERMUTACIÓN
+    if (this.selectedOperation === "permutacion") {
+
+      if (!this.selectedOrigin) {
+        this.error = "Seleccioná la plataforma de origen";
+        return;
+      }
+
+      if (!this.selectedDestination) {
+        this.error = "Seleccioná la plataforma de destino";
+        return;
+      }
+
+      if (this.selectedOrigin === this.selectedDestination) {
+        this.error = "El origen y destino no pueden ser iguales";
+        return;
+      }
+    }
 
     if(this.selectedOperation !== "permutacion"){
         this.apiService.post({
@@ -72,7 +123,6 @@ export class MovementsPage implements OnInit {
           next:async(res)=>{
             await this.showToast()
             this.router.navigate(["/home"])
-            // redirijir a home y borrar todo 
           },
           error:(err)=>{
             this.error = err.error?.detail || "errro al agrergar el movimiento"
@@ -82,16 +132,13 @@ export class MovementsPage implements OnInit {
     }else{
 
       let uri = "" 
-      if(this.selectedOrigin.id == this.selectedDestination.id){
-        this.error = "las plataformas no pueden ser la misma"
-      }
-      if(this.selectedDestination.nombre == "Dólares" || this.selectedOrigin.nombre == "Dólares"){
+      if(this.selectedDestination.nombre == "dólares" || this.selectedOrigin.nombre == "dólares"){
         uri = "/movimientos/permutacion_dolar/"
       
       }else{
         uri = "/movimientos/permutacion/"
-      }
-
+      } 
+      
       this.apiService.post({
         "tipo": this.selectedOperation,
         "monto": this.amount,
@@ -101,9 +148,16 @@ export class MovementsPage implements OnInit {
         next: async(res)=>{
           await this.showToast()
           this.router.navigate(["/home"])
+          this.error = ""
+          this.selectedCategories = ""
+          this.selectedDestination=""
+          this.selectedOperation=""
+          this.amount=null
+          this.description = ""
+          this.selectedPlataform=""
         },
         error:(err)=>{
-          this.error =  err.error?.detail || "errro al agrergar el movimiento"
+          this.error =  err.error?.detail || "error al agrergar el movimiento"
         },
       })
     }

@@ -25,7 +25,7 @@ export class HomePage implements OnInit, AfterViewInit {
   platforms :any = []
 
   constructor(private router: NavController, private storageService: StorageService, private apiService: ApiService) {}
- 
+
   ngAfterViewInit() {
     this.apiService.getEvolucion().subscribe(data => {
     this.chartData = data;

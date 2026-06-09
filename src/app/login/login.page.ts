@@ -51,7 +51,8 @@ export class LoginPage implements OnInit {
         this.password=""
       },
       error: (err) => {
-        this.error = err.error?.detail || "Error al iniciar sesión";
+        console.log(err)
+        this.error = err.error || "Error al iniciar sesión";
         this.isLoading=false
       }
     });

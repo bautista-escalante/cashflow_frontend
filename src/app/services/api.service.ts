@@ -21,8 +21,16 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}${endpoint}`)
   }
 
-  getEvolucion(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/movimientos/evolucion`).pipe(
+  getEvolucion(mes: number, anio: number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.baseUrl}/movimientos/evolucion`,
+      {
+        params: {
+          mes: mes.toString(),
+          anio: anio.toString()
+        }
+      }
+    ).pipe(
       map(data => data.map(d => ({
         label: `${new Date(d.fecha).getDate()}/${new Date(d.fecha).getMonth() + 1}`,
         value: d.saldo

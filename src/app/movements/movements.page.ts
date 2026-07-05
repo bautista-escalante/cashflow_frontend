@@ -113,6 +113,7 @@ export class MovementsPage implements OnInit {
     }
 
     if(this.selectedOperation !== "permutacion"){
+      
         this.apiService.post({
           "tipo": this.selectedOperation,
           "monto": this.amount,
@@ -125,20 +126,20 @@ export class MovementsPage implements OnInit {
             this.router.navigate(["/home"])
           },
           error:(err)=>{
-            this.error = err.error?.detail || "errro al agrergar el movimiento"
+            this.error = err.error?.detail || "error al agrergar el movimiento"
           }
         })
         
     }else{
 
       let uri = "" 
-      if(this.selectedDestination.nombre == "dólares" || this.selectedOrigin.nombre == "dólares"){
-        uri = "/movimientos/permutacion_dolar/"
-      
+      if(this.selectedDestination.nombre == "dolares" || this.selectedOrigin.nombre == "dolares"){
+        uri = "/movimientos/permutacion_dolar"
+
       }else{
-        uri = "/movimientos/permutacion/"
-      } 
-      
+        uri = "/movimientos/permutacion"
+      }
+
       this.apiService.post({
         "tipo": this.selectedOperation,
         "monto": this.amount,

@@ -8,7 +8,7 @@
     </ion-title>
     <ion-buttons slot="end">
       <ion-button id="menu-trigger" class="menu-btn">
-        <img src="assets\ellipsis-vertical.svg" class="add">
+        <img src="assets/ellipsis-vertical.svg" class="add">
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -16,19 +16,19 @@
   <ion-popover trigger="menu-trigger" trigger-action="click" [dismissOnSelect]="true">
     <ng-template>
       <ion-list class="popover-list">
-        
+
         <ion-item button (click)="changePassword()" class="popover-item">
-          <img src="assets\password.svg" class="add">
+          <img src="assets/password.svg" class="add">
           <ion-label>Modificar contraseña</ion-label>
         </ion-item>
-        
+
         <ion-item button (click)="OnLogout()" class="popover-item popover-item--danger">
-          <img src="assets\log-out.svg" class="add">
+          <img src="assets/log-out.svg" class="add">
           <ion-label>Cerrar sesión</ion-label>
         </ion-item>
-        
+
         <ion-item button (click)="OnLogout()" class="popover-item popover-item--danger">
-          <img src="assets\delete-user.svg" class="add">
+          <img src="assets/delete-user.svg" class="add">
           <ion-label>Eliminar cuenta</ion-label>
         </ion-item>
       </ion-list>
@@ -37,9 +37,9 @@
 </ion-header>
 
 <ion-content class="wrap wrap-home">
-  <div class="home-grid">
+  <div class="dashboard-grid">
 
-    <!-- Card evolución mensual -->
+    <!-- Evolución mensual (hero) -->
     <div class="card card-evolution">
       <div class="card-header">
         <span class="card-label">Evolución mensual</span>
@@ -48,71 +48,41 @@
       <div class="chart-container">
         <canvas #barCanvas></canvas>
       </div>
-      </div>
     </div>
 
-    <!-- Fila inferior: lista de gastos + movimientos -->
-    <div class="bottom-row">
+    <!-- Gastos por categoría -->
+    <div class="card card-categories">
+      <div class="card-header">
+        <span class="card-label">Gastos por categoría</span>
+      </div>
 
-      <!-- Card lista de gastos -->
-      <div class="card card-expenses">
-        <div class="card-header">
-          <span class="card-label">Lista de gastos</span>
+      <div class="donut-wrap">
+        <div class="donut-chart">
+          <canvas #pieCanvas></canvas>
         </div>
-        <div class="expense-list">
-          <div class="expense-item" *ngFor="let item of expenses">
 
-            <div class="expense-icon-wrap" [ngClass]="'bg-' + item.type">
-              <ion-icon [name]="item.icon" [ngClass]="'text-' + item.type"></ion-icon>
-            </div>
-            <div class="expense-info">
-              <span class="expense-name">{{ item.name }}</span>
-              <span class="expense-category">{{ item.category }}</span>
-            </div>
-            <span class="expense-amount" [ngClass]="'text-' + item.type">
-              {{ item.amount > 0 ? '+' : '' }}{{ item.amount | currency:'ARS':'$':'1.0-0' }}
+        <div class="category-legend">
+          <div class="legend-item" *ngFor="let cat of categorySummary; let i = index">
+            <span class="legend-dot" [style.background]="categoryColor(i)"></span>
+            <span class="legend-name">{{ cat.categoria }}</span>
+            <span class="legend-amount">
+              {{ cat.total | currency:'ARS':'$':'1.0-0' }}
             </span>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Card movimientos -->
-      <div class="card card-movements">
-        <div class="card-header">
-          <span class="card-label">Movimientos</span>
-          <ion-button fill="clear" size="small" class="card-action-btn" (click)="addMoviments()">
-            <img src="assets\add-circle.svg" class="add">
-          </ion-button>
-        </div>
-        <div class="movement-list">
-          <div class="movement-item" *ngFor="let mov of movements">
-            <div class="movement-left">
-              <!-- <div class="movement-icon-wrap" [ngClass]="'bg-' + mov.type">
-                <ion-icon [name]="mov.icon" [ngClass]="'text-' + mov.type"></ion-icon>
-              </div> -->
-              <div class="movement-info">
-                <span class="movement-desc">{{ mov.description }}</span>
-                <span class="movement-date">{{ mov.date }}</span>
-              </div>
-            </div>
-            <div class="movement-right">
-              <!-- <span class="movement-amount" [ngClass]="'text-' + mov.type">
-                {{ mov.amount > 0 ? '+' : '' }}{{ mov.amount | currency:'ARS':'$':'1.0-0' }}
-              </span> -->
-              <span class="movement-platform">{{ mov.platform }}</span>
-            </div>
-          </div>
-        </div>
+    <!-- Plataformas -->
+    <div class="card card-platforms">
+      <div class="card-header">
+        <span class="card-label">Plataformas</span>
+        <ion-button fill="clear" size="small" class="card-action-btn" (click)="addPlataform()">
+          <img src="assets/wallet-outline.svg" class="add">
+        </ion-button>
       </div>
-    
-      <div class="card card-movements">
-        <div class="card-header">
-          <span class="card-label">Plataformas</span>
-          <ion-button fill="clear" size="small" class="card-action-btn" (click)="addPlataform()">
-            <img src="assets/wallet-outline.svg" class="add">
-          </ion-button>
-        </div>
 
+      <div class="platform-scroll">
         <table class="platform-table">
           <thead>
             <tr>
@@ -122,16 +92,15 @@
             </tr>
           </thead>
           <tbody>
-            
-            @for (platform of platforms; track platform.id) {
 
+            @for (platform of platforms; track platform.id) {
               <tr>
                 <td class="id-col">{{ platform.id }}</td>
                 <td>
-                <div class="platform-name">
-                  <span>{{ platform.nombre | titlecase }}</span>
-                </div>
-              </td>
+                  <div class="platform-name">
+                    <span>{{ platform.nombre | titlecase }}</span>
+                  </div>
+                </td>
                 <td class="text-right saldo-col">
                   {{ platform.saldo | currency:'ARS':'$':'1.0-0' }}
                 </td>
@@ -142,10 +111,52 @@
               <tr>
                 <td colspan="3" class="empty-row">Sin plataformas registradas</td>
               </tr>
-              }
+            }
           </tbody>
         </table>
       </div>
-
     </div>
+
+<!-- Movimientos -->
+<div class="card card-movements">
+  <div class="card-header">
+    <span class="card-label">Movimientos</span>
+    <ion-button fill="clear" size="small" class="card-action-btn" (click)="addMoviments()">
+      <img src="assets/add-circle.svg" class="add">
+    </ion-button>
+  </div>
+
+  <div class="movements-scroll">
+    <ion-list>
+      @for (mov of movements; track mov; let index = $index) {
+      <ion-item>
+        <div class="movement-left">
+          <div class="movement-info">
+            <span class="movement-desc">{{ mov.descripcion }}</span>
+            <span class="movement-date">{{ mov.fecha }}</span>
+          </div>
+        </div>
+
+        <div class="movement-right">
+          @if(mov.tipo === "ingreso") {
+            <span class="movement-amount text-ingreso">
+              + {{ mov.monto | currency:'ARS':'$':'1.0-0' }}
+            </span>
+          } @else if(mov.tipo === "gasto") {
+            <span class="movement-amount text-gasto">
+              - {{ mov.monto | currency:'ARS':'$':'1.0-0' }}
+            </span>
+          } @else {
+            <span class="movement-amount text-permutacion">
+              {{ mov.monto | currency:'ARS':'$':'1.0-0' }}
+            </span>
+          }
+          <span class="movement-platform">{{ searchPlatform(mov.plataforma_id) }}</span>
+        </div>
+      </ion-item>
+      }
+      </ion-list>
+    </div>
+    </div>
+  </div>
 </ion-content>

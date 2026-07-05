@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { interval } from 'rxjs';
 
 import { ApiService } from './services/api.service';
 
@@ -13,6 +14,8 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     // despertamos la api
-    this.api.get("/").subscribe()
+    interval(14 * 60 * 1000).subscribe(() => {
+      this.api.get("/").subscribe()
+      })
   }
 }

@@ -1,6 +1,11 @@
-/* ============================================
-   HOME PAGE — home.page.scss
-   ============================================ */
+/* ---------- TOKENS LOCALES (con fallback) ---------- */
+.wrap-home {
+  --font-mono: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  --color-income: #2dd36f;
+  --color-outcome: var(--color-expense, #eb445a);
+  --color-neutral: var(--color-text-hint, #92949c);
+  --card-radius: 18px;
+}
 
 /* ---------- HEADER ---------- */
 .home-header {
@@ -20,6 +25,7 @@
     font-size: 18px;
     font-weight: 700;
     color: var(--color-text-primary);
+    letter-spacing: -0.2px;
 
     .brand-dot {
       width: 10px;
@@ -35,7 +41,6 @@
   font-size: 20px;
 }
 
-/* Popover */
 .popover-list {
   padding: 4px 0;
 
@@ -46,19 +51,15 @@
     font-size: 14px;
     font-weight: 500;
 
-    .popover-icon {
-      color: var(--color-text-secondary);
-      font-size: 18px;
-    }
-
     &--danger {
       --color: var(--color-expense);
-
-      .popover-icon {
-        color: var(--color-expense);
-      }
     }
   }
+}
+
+.add {
+  height: 30px;
+  padding-right: 10px;
 }
 
 /* ---------- LAYOUT PRINCIPAL ---------- */
@@ -66,40 +67,54 @@
   --background: var(--color-bg-app);
 
   &::part(scroll) {
+    width: 100%;
     padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    padding-top: max(20px, env(safe-area-inset-top));
+    overflow-anchor: none;
   }
 }
 
-.home-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* ---------- FILA INFERIOR ---------- */
-.bottom-row {
+.dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1.6fr;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
   gap: 14px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "evolution categories"
+    "platforms movements";
 
-  @media (max-width: 600px) {
+  @media (max-width: 760px) {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "evolution"
+      "categories"
+      "platforms"
+      "movements";
   }
 }
 
-/* ---------- CARDS ---------- */
+.card-evolution   { grid-area: evolution; }
+.card-categories  { grid-area: categories; }
+
+.card-platforms {
+  grid-area: platforms;
+}
+
+.card-movements {
+  grid-area: movements;
+}
+
+/* ---------- CARDS BASE ---------- */
 .card {
+  position: relative;
   background: var(--color-bg-card);
-  border-radius: 20px;
+  border-radius: var(--card-radius);
   border: 1px solid var(--color-input-bg);
   padding: 18px 16px 16px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
 
 .card-header {
@@ -109,11 +124,21 @@
   margin-bottom: 14px;
 
   .card-label {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--color-text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.8px;
+  }
+
+  .card-badge {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 14%, transparent);
+    padding: 3px 9px;
+    border-radius: 999px;
   }
 
   .card-action-btn {
@@ -126,182 +151,228 @@
   }
 }
 
-/* ---------- CARD EVOLUCIÓN ---------- */
+/* ---------- CARD EVOLUCIÓN (hero) ---------- */
 .card-evolution {
-  min-height: 200px;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
 
-  .chart-placeholder {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  /* firma: cinta degradada superior */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent-mid));
   }
 
-  .chart-bars {
-    display: flex;
-    align-items: flex-end;
-    gap: 10px;
-    height: 130px;
-    padding: 0 4px;
-  }
-
-  .bar-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
+  .chart-container {
+    position: relative;
     flex: 1;
+    width: 100%;
+    min-height: 220px;
+    overflow-anchor: none;
 
-    .bar {
-      width: 100%;
-      max-width: 24px;
-      border-radius: 6px 6px 0 0;
-      transition: height 0.4s ease;
-      min-height: 4px;
-
-      &--income { background: var(--color-income-mid); }
-      &--expense { background: var(--color-expense-mid); }
-    }
-
-    .bar-label {
-      font-size: 10px;
-      color: var(--color-text-hint);
-      margin-top: 4px;
+    canvas {
+      width: 100% !important;
+      height: 100% !important;
     }
   }
 
-  .chart-legend {
-    display: flex;
-    gap: 16px;
-    justify-content: flex-end;
+  @media (max-width: 760px) {
+    min-height: 220px;
 
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 11px;
-      color: var(--color-text-secondary);
-    }
-
-    .legend-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-
-      &--income  { background: var(--color-income-mid); }
-      &--expense { background: var(--color-expense-mid); }
+    .chart-container {
+      min-height: 180px;
     }
   }
 }
 
-/* ---------- CARD GASTOS ---------- */
-.card-expenses {
-  overflow: hidden;
+/* ---------- CARD CATEGORÍAS (donut + leyenda) ---------- */
+.card-categories {
+  display: flex;
+  flex-direction: column;
 
-  .expense-list {
+  .donut-wrap {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 14px;
   }
 
-  .expense-item {
+  .donut-chart {
+    position: relative;
+    width: 100%;
+    height: 140px;
+    flex-shrink: 0;
+    overflow-anchor: none;
+
+    canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+
+  .category-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    overflow-y: auto;
+  }
+
+  .legend-item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
+  }
 
-    .expense-icon-wrap {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .legend-amount {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    font-weight: 600;
+  }
+}
+
+/* ---------- CARD PLATAFORMAS ---------- */
+.card-platforms {
+  .platform-scroll {
+    overflow-x: auto;
+  }
+
+  .platform-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 320px;
+
+    th {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: var(--color-text-hint);
+      padding: 0 12px 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--color-input-bg);
+    }
+
+    td {
+      padding: 12px;
+      font-size: 14px;
+      color: var(--color-text-primary);
+      border-bottom: 1px solid var(--color-input-bg);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .text-right { text-align: right; }
+
+    .id-col {
+      color: var(--color-text-hint);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .platform-name {
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-
-      ion-icon { font-size: 18px; }
+      gap: 10px;
+      font-weight: 500;
     }
 
-    .expense-info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      min-width: 0;
-
-      .expense-name {
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--color-text-primary);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .expense-category {
-        font-size: 11px;
-        color: var(--color-text-hint);
-      }
+    .saldo-col {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      color: var(--color-income);
     }
 
-    .expense-amount {
-      font-size: 13px;
-      font-weight: 700;
-      flex-shrink: 0;
+    .empty-row {
+      text-align: center;
+      color: var(--color-text-hint);
+      padding: 2rem;
     }
   }
 }
 
 /* ---------- CARD MOVIMIENTOS ---------- */
 .card-movements {
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 200px;
 
-  .movement-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  @media (max-width: 760px) {
+    max-height: 360px;
   }
 
-  .movement-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--color-input-bg);
+  .movements-scroll {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0; 
 
-    &:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
+    ion-list {
+      padding: 0;
+      margin: 0;
+      background: transparent;
+    }
+
+    ion-item {
+      --background: transparent;
+      --border-color: var(--color-input-bg);
+      --padding-start: 2px;
+      --inner-padding-end: 2px;
+      --min-height: 54px;
+    }
+
+    // scrollbar fino acorde a la estética oscura
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-input-bg) transparent;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: var(--color-input-bg);
+      border-radius: 999px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
     }
   }
 
   .movement-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
     flex: 1;
     min-width: 0;
-  }
-
-  .movement-icon-wrap {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-
-    ion-icon { font-size: 18px; }
   }
 
   .movement-info {
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 2px;
     min-width: 0;
 
     .movement-desc {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--color-text-primary);
       white-space: nowrap;
@@ -310,6 +381,7 @@
     }
 
     .movement-date {
+      font-family: var(--font-mono);
       font-size: 11px;
       color: var(--color-text-hint);
     }
@@ -323,7 +395,9 @@
     flex-shrink: 0;
 
     .movement-amount {
-      font-size: 13px;
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      font-size: 14px;
       font-weight: 700;
     }
 
@@ -332,48 +406,20 @@
       color: var(--color-text-hint);
     }
   }
-}
 
-.add{
-  height: 30px;
-  padding-right: 10px;
-}
-
-.platform-table {
-  width: 100%;
-  border-collapse: collapse;
-
-  th {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--ion-color-medium);
-    padding: 8px 16px;
-    text-align: left;
-    border-bottom: 1px solid var(--ion-color-light);
-  }
-
-  td {
-    padding: 12px 16px;
-    font-size: 14px;
-    border-bottom: 1px solid var(--ion-color-light-shade);
-  }
-
-  .text-right { text-align: right; }
-
-  .id-col { color: var(--ion-color-medium); font-size: 13px; }
-
-  .saldo-col { font-weight: 500; color: var(--ion-color-success); }
-
-  .platform-name {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--ion-color-medium);
-  }
-
-  .empty-row {
+  .empty-movements {
     text-align: center;
-    color: var(--ion-color-medium);
+    color: var(--color-text-hint);
     padding: 2rem;
+    font-size: 14px;
   }
 }
+
+/* ---------- ESTADOS COMPARTIDOS: ingreso / gasto / permutación ---------- */
+.text-ingreso, .bg-ingreso.legend-dot { color: var(--color-income); }
+.text-gasto, .bg-gasto.legend-dot { color: var(--color-outcome); }
+.text-permutacion, .bg-permutacion.legend-dot { color: var(--color-neutral); }
+
+.bg-ingreso { background: var(--color-income); }
+.bg-gasto { background: var(--color-outcome); }
+.bg-permutacion { background: var(--color-neutral); }

@@ -254,8 +254,47 @@
 
 /* ---------- CARD PLATAFORMAS ---------- */
 .card-platforms {
+  display: flex;
+  flex-direction: column;
+  max-height: 200px;
+
+  @media (max-width: 760px) {
+    max-height: 360px;
+  }
+
   .platform-scroll {
-    overflow-x: auto;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;  
+
+    ion-list {
+      padding: 0;
+      margin: 0;
+      background: transparent;
+    }
+
+    ion-item {
+      --background: transparent;
+      --border-color: var(--color-input-bg);
+      --padding-start: 2px;
+      --inner-padding-end: 2px;
+      --min-height: 54px;
+    }
+
+    // scrollbar fino acorde a la estética oscura
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-input-bg) transparent;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: var(--color-input-bg);
+      border-radius: 999px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
   }
 
   .platform-table {

@@ -86,7 +86,6 @@
         <table class="platform-table">
           <thead>
             <tr>
-              <th>#</th>
               <th>Nombre</th>
               <th class="text-right">Saldo</th>
             </tr>
@@ -95,7 +94,6 @@
 
             @for (platform of platforms; track platform.id) {
               <tr>
-                <td class="id-col">{{ platform.id }}</td>
                 <td>
                   <div class="platform-name">
                     <span>{{ platform.nombre | titlecase }}</span>

@@ -36,14 +36,23 @@
   </ion-popover>
 </ion-header>
 
-<ion-content class="wrap wrap-home">
+<ion-content class="wrap-home">
   <div class="dashboard-grid">
 
     <!-- Evolución mensual (hero) -->
     <div class="card card-evolution">
       <div class="card-header">
         <span class="card-label">Evolución mensual</span>
-        <span class="card-badge badge-income">{{mount + 1}}/{{year}}</span>
+        <div class="card-header-actions">
+          <ion-checkbox
+            class="dolares-checkbox"
+            [(ngModel)]="incluirDolares"
+            (ionChange)="onToggleDolares()"
+            labelPlacement="start">
+            USD
+          </ion-checkbox>
+          <span class="card-badge badge-income">{{mount + 1}}/{{year}}</span>
+        </div>
       </div>
       <div class="chart-container">
         <canvas #barCanvas></canvas>
@@ -126,7 +135,7 @@
 
   <div class="movements-scroll">
     <ion-list>
-      @for (mov of movements; track mov; let index = $index) {
+      @for (mov of movements; track mov.id) {
       <ion-item>
         <div class="movement-left">
           <div class="movement-info">

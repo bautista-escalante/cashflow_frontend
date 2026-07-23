@@ -21,13 +21,14 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}${endpoint}`)
   }
 
-  getEvolucion(mes: number, anio: number): Observable<any[]> {
+  getEvolucion(mes: number, anio: number, incluir_dolares:boolean ): Observable<any[]> {
     return this.http.get<any[]>(
       `${this.baseUrl}/movimientos/evolucion`,
       {
         params: {
           mes: mes.toString(),
-          anio: anio.toString()
+          anio: anio.toString(),
+          incluir_dolares: incluir_dolares
         }
       }
     ).pipe(

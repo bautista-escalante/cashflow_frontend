@@ -4,6 +4,7 @@ import { IonicModule, NavController, IonContent } from '@ionic/angular';
 import { CommonModule  } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms'; 
 import { concatMap, filter, take, toArray } from 'rxjs/operators';
 import { from } from 'rxjs';
 
@@ -15,7 +16,7 @@ Chart.register(...registerables);
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonicModule, CommonModule ],
+  imports: [IonicModule, CommonModule, FormsModule],
 })
 export class HomePage implements OnInit, AfterViewInit {
   movements:any
@@ -31,6 +32,7 @@ export class HomePage implements OnInit, AfterViewInit {
   mount = new Date().getMonth();
   platforms :any = []
   categories :any = []
+  incluirDolares = false; 
 
   private palette = ['#5260ff', '#eb445a', '#ffc409', '#3dc2ff', '#2dd36f'];
 
@@ -91,6 +93,7 @@ export class HomePage implements OnInit, AfterViewInit {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         scales: {
           y: {
             beginAtZero: true
@@ -176,16 +179,19 @@ export class HomePage implements OnInit, AfterViewInit {
     });
   }
 
+  onToggleDolares() {
+    this.loadChart();
+  }
+  
   private loadChart() {
-    this.apiService.getEvolucion(this.mount + 1, this.year).subscribe((data) => {
+    this.apiService.getEvolucion(this.mount + 1, this.year, this.incluirDolares).subscribe((data) => {
       this.chartData = data;
       this.makeBarChart();
     });
     this.loadData()
   }
 
-  ionViewWillEnter() {
-  console.log('ionViewWillEnter disparado', new Date().toISOString());
+  ionViewDidEnter(){
   this.content?.scrollToTop(0);
   this.loadData();
   this.loadChart();
@@ -193,22 +199,6 @@ export class HomePage implements OnInit, AfterViewInit {
 
   async ngAfterViewInit() {
     this.loadChart();
-
-    const scrollEl = await this.content.getScrollElement();
-    console.log('scrollTop inicial:', scrollEl.scrollTop);
-
-    scrollEl.addEventListener('scroll', () => {
-      console.log('scrollTop cambió a:', scrollEl.scrollTop, new Date().toISOString());
-    });
-
-    // por si el salto es por resize de algo (chart, imagen, lo que sea)
-    new ResizeObserver(() => {
-      console.log('algo cambió de tamaño en el contenido, scrollTop ahora:', scrollEl.scrollTop);
-    }).observe(scrollEl);
-  }
-
-  onIonInfinite(){
-
   }
 
 }

@@ -5,6 +5,7 @@ CashFlow es una aplicación web para el control de finanzas personales. Este rep
 🔗 **Demo en producción:** https://cashflow-pi-three.vercel.app
 🔗 **API / Backend:** https://cashflow-backend-bhya.onrender.com/docs
 
+<table> <tr> <td align="center"> <img width="220" alt="login" src="https://github.com/user-attachments/assets/809703a0-05c2-4a7a-a404-34b5c9c2a95e" /> <br/> <sub>Login</sub> </td> <td align="center"> <img width="500" alt="dashboard" src="https://github.com/user-attachments/assets/8b12ef81-0be9-4871-8e07-d6380dade37b" /> <br/> <sub>Dashboard</sub> </td> </tr> </table>
 
 ## ✨ Funcionalidades
 

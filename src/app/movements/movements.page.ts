@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ToastController} from '@ionic/angular';
+import { IonContent, IonSelect, IonSelectOption, ToastController} from '@ionic/angular/standalone';
 import { ApiService } from '../services/api.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -11,8 +11,9 @@ import { Router } from '@angular/router';
   templateUrl: './movements.page.html',
   styleUrls: ['./movements.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [ CommonModule, FormsModule, IonContent, IonSelect, IonSelectOption ]
 })
+
 export class MovementsPage implements OnInit {
 
   plataforms: any = [];

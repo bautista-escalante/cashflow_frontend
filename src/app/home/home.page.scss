@@ -51,8 +51,16 @@
     font-size: 14px;
     font-weight: 500;
 
+    ion-label {
+      color: var(--color-text-primary);
+    }
+
     &--danger {
       --color: var(--color-expense);
+
+      ion-label {
+        color: var(--color-expense);
+      }
     }
   }
 }

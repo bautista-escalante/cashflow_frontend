@@ -19,7 +19,7 @@ Chart.register(...registerables);
   imports: [IonicModule, CommonModule, FormsModule],
 })
 export class HomePage implements OnInit, AfterViewInit {
-  movements:any
+  movements:any = []
   expenses:any
   categorySummary: { categoria: string; total: number }[] = [];
   chartData:any
@@ -204,15 +204,13 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   deleteMovement(id: number) {
-    if (confirm('¿Estás seguro de que deseas eliminar este movimiento?')) {
-      this.apiService.deleteMovement(id).subscribe({
-        next: () => {
-          this.loadData();
-          this.loadChart();
-        },
-        error: (err) => console.log(err),
-      });
-    }
+    this.apiService.deleteMovement(id).subscribe({
+      next: () => {
+        this.loadData();
+        this.loadChart();
+      },
+      error: (err) => console.log(err),
+    });
   }
 
 }

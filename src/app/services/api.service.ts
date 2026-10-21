@@ -18,7 +18,11 @@ export class ApiService {
   }
 
   get(endpoint: string){
-    return this.http.get(`${this.baseUrl}${endpoint}`)
+    return this.http.get(`${this.baseUrl}${endpoint}`);
+  }
+  
+  getWithParams(endpoint: string, param?: any){
+    return this.http.get(`${this.baseUrl}${endpoint}`,{ params: param });
   }
 
   getEvolucion(mes: number, anio: number, incluir_dolares:boolean ): Observable<any[]> {
@@ -44,6 +48,10 @@ export class ApiService {
       `${this.baseUrl}/usuarios/`,
       { clave: newPassword }
       );
+  }
+
+  deleteMovement(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/movimientos/`, { params: { movimiento_id: id.toString() } });
   }
 
 }

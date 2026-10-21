@@ -137,6 +137,7 @@
   <div class="movements-scroll">
     <ion-list>
       @for (mov of movements; track mov.id) {
+
       <ion-item>
         <div class="movement-left">
           <div class="movement-info">
@@ -144,6 +145,13 @@
             <span class="movement-date">{{ mov.fecha }}</span>
           </div>
         </div>
+
+        
+
+        <button slot="end" class="delete-btn" aria-label="Eliminar movimiento" (click)="deleteMovement(mov.id)">
+          <img src="assets/delete.svg" alt="">
+        </button>
+    
 
         <div class="movement-right">
           @if(mov.tipo === "ingreso") {

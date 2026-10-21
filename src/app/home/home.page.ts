@@ -40,8 +40,6 @@ export class HomePage implements OnInit, AfterViewInit {
     private http: HttpClient
   ) {}
 
-
-
   ngOnInit() {
     this.loadData();
   }
@@ -137,7 +135,11 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   private loadData() {
-    this.apiService.get('/movimientos/').subscribe({
+    this.apiService.getWithParams('/movimientos/', 
+      {
+        "anio": this.year.toString(), 
+        "mes": (this.mount + 1).toString()
+      }).subscribe({
       next: (res:any) => {
         this.movements = res.reverse();
       },
@@ -199,6 +201,18 @@ export class HomePage implements OnInit, AfterViewInit {
 
   async ngAfterViewInit() {
     this.loadChart();
+  }
+
+  deleteMovement(id: number) {
+    if (confirm('¿Estás seguro de que deseas eliminar este movimiento?')) {
+      this.apiService.deleteMovement(id).subscribe({
+        next: () => {
+          this.loadData();
+          this.loadChart();
+        },
+        error: (err) => console.log(err),
+      });
+    }
   }
 
 }

@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; 
 import { concatMap, filter, take, toArray } from 'rxjs/operators';
 import { from } from 'rxjs';
+import { AlertController } from '@ionic/angular';
 
 import {ApiService} from '../services/api.service'
 import {StorageService} from '../services/storage.service'
@@ -37,7 +38,7 @@ export class HomePage implements OnInit, AfterViewInit {
   private palette = ['#5260ff', '#eb445a', '#ffc409', '#3dc2ff', '#2dd36f'];
 
   constructor(private router: NavController, private storageService: StorageService, private apiService: ApiService, 
-    private http: HttpClient
+    private http: HttpClient, private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -209,6 +210,42 @@ export class HomePage implements OnInit, AfterViewInit {
         this.loadData();
         this.loadChart();
       },
+      error: (err) => console.log(err),
+    });
+  }
+
+
+  modifyMovement(id: number) {
+    this.apiService.getMovementById(id).subscribe({
+      next: async (movement) => {
+        const alert = await this.alertCtrl.create({
+          header: 'Modificar movimiento',
+          message: `${movement.tipo} · $${movement.monto} · ${movement.fecha}`, 
+          inputs: [
+            {
+              name: 'descripcion',
+              type: 'textarea',
+              value: movement.descripcion,
+              placeholder: 'Descripción',
+            },
+          ],
+          buttons: [
+            { text: 'Cancelar', role: 'cancel' },
+            {
+              text: 'Guardar',
+              handler: (data) => this.saveDescription(id, data.descripcion),
+            },
+          ],
+        });
+        await alert.present();
+      },
+      error: (err) => console.log(err),
+    });
+  }
+
+  private saveDescription(id: number, description: string) {
+    this.apiService.modifyMovement(id, description ).subscribe({
+      next: () => this.loadData(), // refrescar la lista
       error: (err) => console.log(err),
     });
   }

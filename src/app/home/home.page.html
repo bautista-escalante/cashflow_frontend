@@ -115,7 +115,7 @@
               </tr>
             }
 
-            @if(platforms.length === 0){
+            @empty{
               <tr>
                 <td colspan="3" class="empty-row">Sin plataformas registradas</td>
               </tr>
@@ -146,12 +146,13 @@
           </div>
         </div>
 
-        
-
         <button slot="end" class="delete-btn" aria-label="Eliminar movimiento" (click)="deleteMovement(mov.id)">
           <img src="assets/delete.svg" alt="">
         </button>
-    
+        
+        <button slot="end" class="delete-btn" aria-label="Modificar movimiento" (click)="modifyMovement(mov.id)">
+          <img src="assets/modify.svg" alt="">
+        </button>
 
         <div class="movement-right">
           @if(mov.tipo === "ingreso") {

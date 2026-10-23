@@ -54,4 +54,14 @@ export class ApiService {
     return this.http.delete(`${this.baseUrl}/movimientos/`, { params: { movimiento_id: id.toString() } });
   }
 
+  getMovementById(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/movimientos/${id}`);
+  }
+
+  modifyMovement(id: number, descripcion: string): Observable<any> {
+    console.log(`Modifying movement with ID: ${id}, new description: ${descripcion}`); 
+    return this.http.put(`${this.baseUrl}/movimientos/`, null, {
+      params: { movimiento_id: id, descripcion },
+    });
+  }
 }
